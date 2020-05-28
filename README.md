@@ -14,7 +14,28 @@ Also, all links will be printed to the chrome console when the whole scanning is
 
 You can also get all links by entering following command to the chrome console, event during the script is running:
 ```js
-links.forEach(l=>console.log(l));
+links.join('\n');
+```
+Or you can save to file with this script from stackoverflow
+```js
+~function(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}(links.join('\n'), 'links.txt', 'file');
+
 ```
 
 ## Other Information
