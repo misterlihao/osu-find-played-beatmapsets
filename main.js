@@ -62,7 +62,9 @@ let last_cursor = null;
 let links = [];
 while (processed < total) {
 	await delay(1000);
-	console.log('completed search cursor = ' + last_cursor);
+	
+	console.log('search from cursor = ' + JSON.stringify(last_cursor));
+	
 	let search_result = await search(make_search_query(last_cursor));
 	last_cursor = search_result.cursor;
 	total = search_result.total;
