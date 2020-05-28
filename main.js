@@ -1,3 +1,22 @@
+let download = function(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+};
+
+
 let delay = async function(t) {
 	await new Promise(resolve => {
 		setTimeout(resolve, t);
@@ -43,8 +62,10 @@ let last_cursor = null;
 let links = [];
 while (processed < total) {
 	await delay(1000);
+	console.log('completed search cursor = ' + last_cursor);
 	let search_result = await search(make_search_query(last_cursor));
 	last_cursor = search_result.cursor;
+	total = search_result.total;
 	
 	for (bmset of search_result.beatmapsets) {
 		processed += 1;
@@ -64,5 +85,5 @@ while (processed < total) {
 	}
 }
 
-console.log('beatmaps links:');
-links.forEach(link => console.log(link));
+console.log('scan completed, script ended.');
+download(links.join('\n'), 'links.txt', 'file');
