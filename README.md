@@ -20,27 +20,16 @@ You can also get all links by entering following command to the chrome console, 
 ```js
 links.join('\n');
 ```
-Or you can save to file with this script from stackoverflow
+Or you can save to file with following script:
 ```js
-~function(data, filename, type) {
-    var file = new Blob([data], {type: type});
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
-        var a = document.createElement("a"),
-                url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
-    }
-}(links.join('\n'), 'links.txt', 'file');
-
+download(links.join('\n'), 'links.txt', 'file');
 ```
+
+### Proceed on the half
+
+If you need to stop scanning, just save scanned links to your PC and then remember the last cursor (will be printed in the chrome console).  
+Next time you can start scanning from the cursor by changing the part `let last_cursor = null;` to  
+`let last_cursor = YOUR-CURSOR;`
 
 ## Other Information
 
