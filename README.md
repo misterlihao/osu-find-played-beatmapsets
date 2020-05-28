@@ -11,8 +11,10 @@ You should be at osu website and already logged in.
 Simply put content of `main.js` to the chrome console.  
 And before the script completes, do not refresh or leave the osu website page.
 
-The script will keep checking all the beatmapsets available from osu website, printed out every time a beatmapset is fonud played.  
-Also, all links will be printed to the chrome console when the whole scanning is completed.
+The script will keep checking all the beatmapsets available from osu website,  
+printed out every time a beatmapset is fonud played.
+
+Also, all links will be saved to file `links.txt` when the whole scanning is completed.
 
 ### Get Output
 
